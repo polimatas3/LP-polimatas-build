@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { TechIcon } from './TechIcon';
-import { Component as BackgroundSnippets } from '@/components/ui/background-snippets';
+// importação removida: BackgroundSnippets não utilizado
 
 // Lista de tecnologias com seus IDs do sprite
 const technologies = [
