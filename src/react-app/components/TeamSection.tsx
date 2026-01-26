@@ -1,4 +1,7 @@
 import { motion } from 'framer-motion';
+import ceo1Img from '@/assets/images/team/ceo1.avif';
+import ceo2Img from '@/assets/images/team/ceo2.avif';
+import ceo3Img from '@/assets/images/team/ceo3.avif';
 
 interface TeamMember {
   name: string;
@@ -13,21 +16,21 @@ const teamMembers: TeamMember[] = [
     name: "Gabriel",
     role: "CEO & Co-founder",
     bio: "Fundador da Polímatas, atua com automação e IA para transformar processos em sistemas escaláveis. Ex-oficial da Marinha, com experiência em projetos governamentais e foco em integrações, dashboards e agentes de IA.",
-    image: "/images/team/ceo1.png",
+    image: ceo1Img,
     imagePosition: "center top",
   },
   {
     name: "Danilo",
     role: "CTO & Co-founder",
     bio: "Com mais de 12 anos de experiência em TI, infraestrutura e cibersegurança, Danilo Duarte é especialista em automações completas, seguras e escaláveis. Com formação em Engenharia de Redes pela UnB, atua integrando infraestrutura, marketing, vendas e operações com foco em alta disponibilidade e performance.",
-    image: "/images/team/ceo2.png",
+    image: ceo2Img,
     imagePosition: "center top",
   },
   {
     name: "José",
     role: "CMO & Co-founder",
     bio: "Mentor em marketing digital, especialista em automações com IA para performance, escala e eficiência. Atua criando soluções que otimizam processos e aumentam conversão em marketing e vendas.",
-    image: "/images/team/ceo3.png",
+    image: ceo3Img,
   },
 ];
 
@@ -78,9 +81,11 @@ export default function TeamSection() {
               >
                 <img
                   src={member.image}
-                  alt={`Foto de ${member.name}`}
+                  alt={`${member.name} - ${member.role} da Polímatas`}
                   className="w-full h-full object-cover"
                   style={{ objectPosition: member.imagePosition || 'center center' }}
+                  loading="lazy"
+                  decoding="async"
                   onError={(e) => {
                     // Fallback placeholder if image doesn't exist
                     (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&size=200&background=1a1a1a&color=06b6d4&font-size=0.4`;

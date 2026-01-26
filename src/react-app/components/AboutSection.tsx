@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { Badge } from './ui/badge';
 import { BorderTrail } from './ui/border-trail';
 import { HoverButton } from './ui/hover-button';
+import davinciImg from '@/assets/images/davinci.avif';
 
 export default function AboutSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -113,9 +114,11 @@ export default function AboutSection() {
                 }}
               />
               <img 
-                src="/images/Design sem nome.png"
-                alt="Polímata - Leonardo da Vinci com Inteligência Artificial"
+                src={davinciImg}
+                alt="Polímata - Leonardo da Vinci representando a união entre arte, ciência e tecnologia com Inteligência Artificial"
                 className="w-full h-auto rounded-2xl aspect-square object-cover"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </motion.div>

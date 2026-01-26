@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Instagram, Youtube, Mail } from 'lucide-react';
 import { Link } from 'react-router';
+import logoImg from '@/assets/images/logo.avif';
 
 export default function Footer() {
   const socialLinks = [
@@ -60,9 +61,11 @@ export default function Footer() {
           >
             <div className="flex items-center gap-3 mb-4">
               <img 
-                src="/images/logo.png" 
-                alt="Polímatas AI Logo" 
+                src={logoImg} 
+                alt="Polímatas - Automação e Inteligência Artificial" 
                 className="h-10 w-auto object-contain"
+                loading="lazy"
+                decoding="async"
               />
               <span className="text-xl font-light tracking-tight text-white">
                 Polímatas

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import logoImg from '@/assets/images/logo.avif';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -87,7 +88,12 @@ export default function Header() {
             {/* Logo on the left */}
             <div className="flex items-center">
               <motion.div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollToSection('home')} whileHover={{ scale: 1.02 }}>
-                <img src="/images/logo.png" alt="Polímatas AI Logo" className="h-10 w-auto object-contain" />
+                <img 
+                  src={logoImg} 
+                  alt="Polímatas - Automação e Inteligência Artificial" 
+                  className="h-10 w-auto object-contain"
+                  decoding="async"
+                />
                 <div className="flex flex-col">
                   <span className="text-lg font-light tracking-tight text-white">Polímatas</span>
                 </div>

@@ -1,44 +1,42 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
+import { TechIcon } from './TechIcon';
+import { Component as BackgroundSnippets } from '@/components/ui/background-snippets';
 
-const logos = [
+// Lista de tecnologias com seus IDs do sprite
+const technologies = [
   // Automação e Infraestrutura
-  { src: '/images/technologies/n8n.png', alt: 'n8n', size: 44 },
-  { src: '/images/technologies/python.png', alt: 'Python', size: 36 },
-  { src: '/images/technologies/docker.png', alt: 'Docker', size: 40 },
-  { src: '/images/technologies/postgresql.png', alt: 'PostgreSQL', size: 40 },
-  { src: '/images/technologies/supabase.png', alt: 'Supabase', size: 40 },
-  { src: '/images/technologies/rabbitmq.png', alt: 'RabbitMQ', size: 64 },
-  { src: '/images/technologies/portainer.png', alt: 'Portainer', size: 40 },
-  { src: '/images/technologies/backblaze.png', alt: 'Backblaze', size: 40 },
+  { id: 'n8n', name: 'n8n', description: 'Plataforma de automação de workflows', size: 84 }, // +60%
+  { id: 'python', name: 'Python', description: 'Linguagem de programação para IA', size: 36 },
+  { id: 'docker', name: 'Docker', description: 'Containerização de aplicações', size: 44 },
+  { id: 'postgresql', name: 'PostgreSQL', description: 'Banco de dados relacional', size: 40 },
+  { id: 'supabase', name: 'Supabase', description: 'Backend as a Service', size: 40 },
+  { id: 'rabbitmq', name: 'RabbitMQ', description: 'Message broker', size: 31 }, // -40%
+  { id: 'portainer', name: 'Portainer', description: 'Gerenciamento de containers', size: 44 }, // +10%
+  { id: 'backblaze', name: 'Backblaze', description: 'Armazenamento em nuvem', size: 44 },
   // Marketing e Comunicação
-  { src: '/images/technologies/mautic.png', alt: 'Mautic', size: 40 },
-  { src: '/images/technologies/chatwoot.png', alt: 'Chatwoot', size: 40 },
-  { src: '/images/technologies/vapi.png', alt: 'Vapi', size: 68 },
-  { src: '/images/technologies/slack.png', alt: 'Slack', size: 60 },
+  { id: 'mautic', name: 'Mautic', description: 'Automação de marketing', size: 40 },
+  { id: 'chatwoot', name: 'Chatwoot', description: 'Atendimento ao cliente', size: 40 },
+  { id: 'vapi', name: 'Vapi', description: 'Agentes de voz com IA', size: 74 }, // +25%
+  { id: 'slack', name: 'Slack', description: 'Comunicação empresarial', size: 78 }, // +40%
   // CRM e Gestão
-  { src: '/images/technologies/ghl.png', alt: 'GHL', size: 53 },
-  { src: '/images/technologies/kommo.png', alt: 'Kommo', size: 52 },
-  { src: '/images/technologies/pipedrive.png', alt: 'Pipedrive', size: 40 },
-  { src: '/images/technologies/rd station.png', alt: 'RD Station', size: 40 },
-  { src: '/images/technologies/clickup.png', alt: 'ClickUp', size: 40 },
-  { src: '/images/technologies/monday.png', alt: 'Monday', size: 46 },
+  { id: 'kommo', name: 'Kommo', description: 'CRM de vendas', size: 57 }, // +10%
+  { id: 'pipedrive', name: 'Pipedrive', description: 'CRM de vendas', size: 78 }, // +30%
+  { id: 'rdstation', name: 'RD Station', description: 'Marketing e CRM', size: 36 }, // -10%
+  { id: 'clickup', name: 'ClickUp', description: 'Gestão de projetos', size: 40 },
   // Plataformas de Infoprodutos
-  { src: '/images/technologies/hotmart.png', alt: 'Hotmart', size: 40 },
-  { src: '/images/technologies/kiwify.png', alt: 'Kiwify', size: 40 },
-  { src: '/images/technologies/herospark.png', alt: 'HeroSpark', size: 40 },
-  { src: '/images/technologies/cakto.png', alt: 'Cakto', size: 40 },
+  { id: 'hotmart', name: 'Hotmart', description: 'Plataforma de infoprodutos', size: 86 }, // +25%
+  { id: 'kiwify', name: 'Kiwify', description: 'Venda de produtos digitais', size: 79 }, // +15%
   // Nichos Específicos
-  { src: '/images/technologies/hubsoft.png', alt: 'HubSoft', size: 40 },
-  { src: '/images/technologies/clinicorp.png', alt: 'Clinicorp', size: 48 },
-  { src: '/images/technologies/consultorio.me.png', alt: 'Consultório.me', size: 34 },
-  { src: '/images/technologies/asaas.png', alt: 'Asaas', size: 40 },
+  { id: 'clinicorp', name: 'Clinicorp', description: 'Gestão de clínicas', size: 84 },
+  { id: 'asaas', name: 'Asaas', description: 'Gestão financeira', size: 58 },
   // Web
-  { src: '/images/technologies/wordpress.png', alt: 'WordPress', size: 44 },
+  { id: 'wordpress', name: 'WordPress', description: 'CMS e sites', size: 44 },
 ];
 
 export default function TechnologiesSection() {
   const containerRef = useRef<HTMLElement>(null);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
@@ -53,23 +51,10 @@ export default function TechnologiesSection() {
       className="relative py-16 bg-black overflow-hidden w-full"
       style={{ opacity }}
     >
-      {/* Gradient background */}
-      <div
-        className="absolute inset-0 opacity-20"
-        style={{
-          background:
-            'radial-gradient(circle at 30% 50%, #ac5ff715, transparent 50%), radial-gradient(circle at 70% 50%, #38b6fe15, transparent 50%)',
-        }}
-      />
 
-      {/* Subtle dotted pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)',
-          backgroundSize: '30px 30px',
-        }}
-      />
+      {/* Background customizado ocupa toda a section */}
+        {/* Background customizado ocupa toda a section */}
+        {/* Removido: overlays antigos de gradiente e dotted pattern */}
 
       <div className="relative z-10 w-full">
         <motion.div
@@ -97,50 +82,45 @@ export default function TechnologiesSection() {
           <div className="w-full h-px bg-neutral-800 [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />
 
           <div className="w-full overflow-hidden py-5">
-            <div className="relative flex w-full overflow-hidden">
-              <div 
-                className="flex w-max animate-marquee hover:[animation-play-state:paused]"
-                style={{ "--duration": "35s" } as React.CSSProperties}
-              >
-                {/* First set */}
-                {logos.map((logo, index) => (
-                  <div
-                    key={`first-${index}`}
-                    className="mx-12 flex flex-col items-center justify-center shrink-0"
-                  >
-                    <div className="h-[60px] flex items-center justify-center">
-                      <img
-                        src={logo.src}
-                        alt={logo.alt}
-                        style={{ height: `${logo.size}px` }}
-                        className="w-auto object-contain opacity-80 hover:opacity-100 transition-opacity"
-                      />
-                    </div>
-                    <span className="text-gray-500 text-xs mt-2 font-light">
-                      {logo.alt}
-                    </span>
+            <div className="flex tech-carousel-animate rounded-xl bg-black/90 px-4 py-2" style={{ width: 'max-content' }}>
+              {/* First set */}
+              {technologies.map((tech, index) => (
+                <div
+                  key={`first-${index}`}
+                  className="mx-12 flex flex-col items-center justify-center shrink-0"
+                >
+                  <div className="h-[60px] flex items-center justify-center">
+                    <TechIcon
+                      name={tech.name}
+                      id={tech.id}
+                      size={tech.size}
+                      className="opacity-80 hover:opacity-100 transition-opacity"
+                    />
                   </div>
-                ))}
-                {/* Second set (duplicate for seamless loop) */}
-                {logos.map((logo, index) => (
-                  <div
-                    key={`second-${index}`}
-                    className="mx-12 flex flex-col items-center justify-center shrink-0"
-                  >
-                    <div className="h-[60px] flex items-center justify-center">
-                      <img
-                        src={logo.src}
-                        alt={logo.alt}
-                        style={{ height: `${logo.size}px` }}
-                        className="w-auto object-contain opacity-80 hover:opacity-100 transition-opacity"
-                      />
-                    </div>
-                    <span className="text-gray-500 text-xs mt-2 font-light">
-                      {logo.alt}
-                    </span>
+                  <span className="text-white text-xs mt-2 font-light">
+                    {tech.name}
+                  </span>
+                </div>
+              ))}
+              {/* Second set (duplicate for seamless loop) */}
+              {technologies.map((tech, index) => (
+                <div
+                  key={`second-${index}`}
+                  className="mx-12 flex flex-col items-center justify-center shrink-0"
+                >
+                  <div className="h-[60px] flex items-center justify-center">
+                    <TechIcon
+                      name={tech.name}
+                      id={tech.id}
+                      size={tech.size}
+                      className="opacity-80 hover:opacity-100 transition-opacity"
+                    />
                   </div>
-                ))}
-              </div>
+                  <span className="text-white text-xs mt-2 font-light">
+                    {tech.name}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
 

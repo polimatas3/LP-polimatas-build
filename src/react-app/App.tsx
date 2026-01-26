@@ -3,10 +3,12 @@ import HomePage from "@/react-app/pages/Home";
 import TermsOfUse from "@/react-app/pages/TermsOfUse";
 import PrivacyPolicy from "@/react-app/pages/PrivacyPolicy";
 import CookiesPolicy from "@/react-app/pages/CookiesPolicy";
+import { SpriteInjector } from "@/react-app/components/SpriteInjector";
 
 export default function App() {
   return (
     <Router>
+      <SpriteInjector />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/termos-de-uso" element={<TermsOfUse />} />
