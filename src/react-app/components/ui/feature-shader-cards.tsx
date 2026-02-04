@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { openContactCalendly } from "../../lib/contact-calendly"
 
 interface Feature {
   title: string
@@ -79,15 +80,19 @@ export default function FeaturesCards() {
 
       <p className="text-sm leading-relaxed flex-grow text-gray-300 font-medium">{feature.description}</p>
 
-      <a 
-        href="#contact" 
-        className="mt-4 md:mt-5 flex items-center text-sm font-bold text-gray-300 group-hover:text-white transition-colors hover:underline"
+      <button 
+        onClick={(e) => {
+          e.preventDefault();
+          openContactCalendly();
+        }}
+        className="mt-4 md:mt-5 flex items-center text-sm font-bold text-gray-300 group-hover:text-white transition-colors hover:underline cursor-pointer bg-transparent border-none p-0"
+        aria-label={`Conheça mais sobre ${feature.title.replace(/<[^>]*>/g, '')}`}
       >
         <span className="mr-2">Conheça mais</span>
-        <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
-      </a>
+      </button>
     </div>
   );
 

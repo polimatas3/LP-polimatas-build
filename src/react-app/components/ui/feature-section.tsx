@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { m, AnimatePresence } from "framer-motion"
 
 interface Feature {
   step: string
@@ -52,7 +52,7 @@ export function FeatureSteps({
           {/* Steps List */}
           <div className="order-2 md:order-1 space-y-6">
             {features.map((feature, index) => (
-              <motion.div
+              <m.div
                 key={index}
                 className="flex items-start gap-6 md:gap-8 cursor-pointer"
                 onClick={() => {
@@ -63,7 +63,7 @@ export function FeatureSteps({
                 animate={{ opacity: index === currentFeature ? 1 : 0.5 }}
                 transition={{ duration: 0.5 }}
               >
-                <motion.div
+                <m.div
                   className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center border-2 transition-all ${
                     index === currentFeature
                       ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 border-blue-400 scale-110'
@@ -75,7 +75,7 @@ export function FeatureSteps({
                   ) : (
                     <span className="text-lg md:text-xl font-semibold text-gray-400">{index + 1}</span>
                   )}
-                </motion.div>
+                </m.div>
 
                 <div className="flex-1 pt-1">
                   <h3 className={`text-lg md:text-xl font-semibold transition-colors ${
@@ -87,7 +87,7 @@ export function FeatureSteps({
                     {feature.content}
                   </p>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
 
@@ -97,7 +97,7 @@ export function FeatureSteps({
               {features.map(
                 (feature, index) =>
                   index === currentFeature && (
-                    <motion.div
+                    <m.div
                       key={index}
                       className="absolute inset-0 rounded-2xl overflow-hidden"
                       initial={{ y: 100, opacity: 0, rotateX: -20 }}
@@ -111,14 +111,14 @@ export function FeatureSteps({
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-black via-black/50 to-transparent" />
-                    </motion.div>
+                    </m.div>
                   ),
               )}
             </AnimatePresence>
 
             {/* Progress Bar */}
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-800">
-              <motion.div
+              <m.div
                 className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500"
                 initial={{ width: "0%" }}
                 animate={{ width: `${progress}%` }}

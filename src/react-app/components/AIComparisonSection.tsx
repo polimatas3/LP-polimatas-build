@@ -1,6 +1,7 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { m, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { Check, X, Sparkles } from 'lucide-react';
+import { openContactCalendly } from '../lib/contact-calendly';
 
 const features = [
   {
@@ -11,7 +12,7 @@ const features = [
   {
     name: 'Integração com outros sistemas',
     us: true,
-    competitors: [true, true],
+    competitors: [false, true],
   },
   {
     name: 'Treinamento prático',
@@ -51,14 +52,14 @@ export default function AIComparisonSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
-    <motion.section 
+    <m.section 
       id="compare"
       ref={containerRef}
       className="py-32 bg-black relative overflow-hidden" 
       style={{ opacity }}
     >
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -71,14 +72,14 @@ export default function AIComparisonSection() {
           <p className="text-gray-500 text-lg max-w-2xl mx-auto font-light">
             Compare nossas soluções personalizadas com plataformas genéricas
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Desktop view - comparison table */}
         <div className="hidden md:block max-w-4xl mx-auto">
           {/* Header row */}
           <div className="grid grid-cols-4 gap-4 mb-8">
             <div className="col-span-1"></div>
-            <motion.div 
+            <m.div 
               className="text-center relative"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -96,9 +97,9 @@ export default function AIComparisonSection() {
                 <span className="text-sm font-medium text-white">Nossa Solução</span>
               </div>
               <p className="text-white text-xl font-light">Personalizado</p>
-            </motion.div>
+            </m.div>
             {['Ferramentas prontas', 'Freelancers'].map((competitor, idx) => (
-              <motion.div 
+              <m.div 
                 key={competitor}
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
@@ -112,13 +113,13 @@ export default function AIComparisonSection() {
                 <p className="text-gray-500 text-sm font-light">
                   {idx === 0 ? 'R$1.499/mês' : 'R$1.999/mês'}
                 </p>
-              </motion.div>
+              </m.div>
             ))}
           </div>
 
           {/* Feature rows */}
           {features.map((feature, featureIdx) => (
-            <motion.div
+            <m.div
               key={feature.name}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -134,7 +135,7 @@ export default function AIComparisonSection() {
               
               {/* Our solution */}
               <div className="flex justify-center">
-                <motion.div
+                <m.div
                   className="w-12 h-12 rounded-full flex items-center justify-center"
                   style={{
                     background: 'linear-gradient(135deg, #38b6fe20, #ac5ff720)',
@@ -145,13 +146,13 @@ export default function AIComparisonSection() {
                   transition={{ duration: 0.5 }}
                 >
                   <Check className="w-6 h-6 text-[#38b6fe]" strokeWidth={3} />
-                </motion.div>
+                </m.div>
               </div>
 
               {/* Competitors */}
               {feature.competitors.map((hasFeature, compIdx) => (
                 <div key={compIdx} className="flex justify-center">
-                  <motion.div
+                  <m.div
                     className={`w-12 h-12 rounded-full flex items-center justify-center ${
                       hasFeature ? 'bg-white/5' : 'bg-white/[0.02]'
                     }`}
@@ -168,17 +169,17 @@ export default function AIComparisonSection() {
                     ) : (
                       <X className="w-5 h-5 text-white/10" strokeWidth={2} />
                     )}
-                  </motion.div>
+                  </m.div>
                 </div>
               ))}
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
         {/* Mobile view - cards */}
         <div className="md:hidden grid gap-6">
           {mobileFeatures.map((feature, index) => (
-            <motion.div
+            <m.div
               key={feature.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -193,7 +194,7 @@ export default function AIComparisonSection() {
                 }}
               >
                 {/* Animated dot */}
-                <motion.div
+                <m.div
                   className="absolute w-1.5 h-1.5 bg-white rounded-full z-20"
                   style={{
                     boxShadow: '0 0 10px #ffffff',
@@ -261,12 +262,12 @@ export default function AIComparisonSection() {
                   />
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
         {/* CTA */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -274,38 +275,40 @@ export default function AIComparisonSection() {
           className="text-center mt-12"
         >
           {/* Desktop button */}
-          <motion.button
+          <m.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              const element = document.getElementById('contact');
-              if (element) element.scrollIntoView({ behavior: 'smooth' });
+            onClick={(e) => {
+              e.preventDefault();
+              openContactCalendly();
             }}
             className="hidden md:inline-block px-10 py-4 text-black text-sm font-semibold rounded-full bg-cyan-500 hover:bg-cyan-400 transition-colors"
             style={{
               boxShadow: '0 20px 40px rgba(56, 182, 254, 0.3)',
             }}
+            aria-label="Começar agora - Agendar consultoria gratuita"
           >
             Começar agora
-          </motion.button>
+          </m.button>
 
           {/* Mobile button */}
-          <motion.button
+          <m.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              const element = document.getElementById('contact');
-              if (element) element.scrollIntoView({ behavior: 'smooth' });
+            onClick={(e) => {
+              e.preventDefault();
+              openContactCalendly();
             }}
             className="md:hidden px-8 py-3 text-black text-sm font-semibold rounded-full bg-cyan-500 hover:bg-cyan-400 transition-colors"
             style={{
               boxShadow: '0 10px 30px rgba(56, 182, 254, 0.3)',
             }}
+            aria-label="Começar agora - Agendar consultoria gratuita"
           >
             Começar agora
-          </motion.button>
-        </motion.div>
+          </m.button>
+        </m.div>
       </div>
-    </motion.section>
+    </m.section>
   );
 }

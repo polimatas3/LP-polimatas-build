@@ -1,9 +1,10 @@
 "use client";
-import { motion, useInView } from "framer-motion";
+import { m, useInView } from "framer-motion";
 import { Badge } from "./badge";
 import { Button } from "./button";
 import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
+import { openContactCalendly } from "../../lib/contact-calendly";
 
 export interface RoadmapItem {
   quarter: string;
@@ -34,7 +35,7 @@ export function RoadmapCard({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
         {/* Left - Title and Description */}
         <div className="text-left lg:sticky lg:top-32">
-          <motion.p
+          <m.p
             className="text-cyan-500 text-sm italic mb-2 uppercase"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -42,8 +43,8 @@ export function RoadmapCard({
             transition={{ duration: 0.6 }}
           >
             modelo polímatas
-          </motion.p>
-          <motion.h2 
+          </m.p>
+          <m.h2 
             className="text-4xl md:text-5xl font-light text-white mb-4"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -51,8 +52,8 @@ export function RoadmapCard({
             transition={{ duration: 0.6, delay: 0.05 }}
           >
             {title}
-          </motion.h2>
-          <motion.p 
+          </m.h2>
+          <m.p 
             className="text-gray-500 text-lg font-light max-w-md mb-6"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -60,8 +61,8 @@ export function RoadmapCard({
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             {description}
-          </motion.p>
-          <motion.div
+          </m.p>
+          <m.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -72,16 +73,14 @@ export function RoadmapCard({
               Icon={() => <ArrowRight className="h-4 w-4" />} 
               iconPlacement="right"
               className="bg-cyan-500 hover:bg-cyan-600 text-black font-semibold px-6"
-              onClick={() => {
-                const element = document.getElementById('contact');
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' });
-                }
+              onClick={(e) => {
+                e.preventDefault();
+                openContactCalendly();
               }}
             >
               Agende uma chamada
             </Button>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* Right - Vertical Timeline (all breakpoints) */}
@@ -91,7 +90,7 @@ export function RoadmapCard({
             <div className="absolute left-1/2 -translate-x-1/2 top-6 bottom-6 w-0.5 bg-white/10" />
             
             {/* Animated cyan line */}
-            <motion.div 
+            <m.div 
               className="absolute left-1/2 -translate-x-1/2 top-6 w-0.5 bg-cyan-500 origin-top"
               initial={{ height: 0 }}
               animate={isInView ? { height: "calc(100% - 48px)" } : { height: 0 }}
@@ -104,7 +103,7 @@ export function RoadmapCard({
                 const delay = stepDelays[index];
                 
                 return (
-                  <motion.div
+                  <m.div
                     key={index}
                     className={`relative flex items-start gap-6 ${isLeft ? 'flex-row-reverse' : 'flex-row'}`}
                     initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
@@ -120,7 +119,7 @@ export function RoadmapCard({
                       >
                         {item.quarter}
                       </Badge>
-                      <h4 className="text-base md:text-lg font-semibold text-white mb-1">{item.title}</h4>
+                      <h3 className="text-base md:text-lg font-semibold text-white mb-1">{item.title}</h3>
                       <p className="text-sm text-gray-400 leading-relaxed">
                         {item.description}
                       </p>
@@ -128,19 +127,19 @@ export function RoadmapCard({
 
                     {/* Timeline Dot (center) */}
                     <div className="relative flex-shrink-0">
-                      <motion.div
+                      <m.div
                         className="w-10 h-10 rounded-full flex items-center justify-center z-10 relative"
                         initial={{ backgroundColor: "rgba(255,255,255,0.2)", scale: 0.8 }}
                         animate={isInView ? { backgroundColor: "#06b6d4", scale: 1 } : {}}
                         transition={{ duration: 0.5, delay: delay }}
                       >
                         <span className="text-sm font-bold text-black">{index + 1}</span>
-                      </motion.div>
+                      </m.div>
                     </div>
 
                     {/* Empty space for alignment */}
                     <div className="flex-1" />
-                  </motion.div>
+                  </m.div>
                 );
               })}
             </div>

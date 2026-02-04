@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { cn } from "../../lib/utils";
 
 export function FloatingPathsBackground({
@@ -35,7 +35,7 @@ export function FloatingPathsBackground({
           fill="none"
         >
           {paths.map((path) => (
-            <motion.path
+            <m.path
               key={path.id}
               d={path.d}
               stroke="currentColor"

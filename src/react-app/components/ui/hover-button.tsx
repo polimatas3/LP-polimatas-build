@@ -5,10 +5,11 @@ import { cn } from "../../lib/utils"
 
 interface HoverButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
+  ariaLabel?: string
 }
 
 const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(
-  ({ className, children, ...props }, ref) => {
+  ({ className, children, ariaLabel, ...props }, ref) => {
     const buttonRef = React.useRef<HTMLButtonElement>(null)
     const [isListening, setIsListening] = React.useState(false)
     const [circles, setCircles] = React.useState<Array<{
@@ -102,6 +103,7 @@ const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(
         onPointerMove={handlePointerMove}
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
+        aria-label={ariaLabel}
         {...props}
         style={{
           "--circle-start": "var(--tw-gradient-from, #a0d9f8)",

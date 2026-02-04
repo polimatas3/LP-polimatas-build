@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { m, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import FeaturesCards from './ui/feature-shader-cards';
 import { FloatingPathsBackground } from './ui/floating-paths';
@@ -13,7 +13,7 @@ export default function ServicesSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
-    <motion.section 
+    <m.section 
       id="services" 
       ref={containerRef}
       className="py-32 bg-black relative overflow-hidden"
@@ -30,7 +30,7 @@ export default function ServicesSection() {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -41,17 +41,17 @@ export default function ServicesSection() {
           <p className="text-gray-500 text-lg max-w-2xl mx-auto font-light">
             Soluções completas para transformar seu negócio com inteligência artificial
           </p>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <FeaturesCards />
-        </motion.div>
+        </m.div>
       </div>
-    </motion.section>
+    </m.section>
   );
 }

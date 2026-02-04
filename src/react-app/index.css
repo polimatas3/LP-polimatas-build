@@ -1,4 +1,46 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* Local fonts via @fontsource/inter - must be at the top */
+@import "@fontsource/inter/300.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+
+/* Hover effect for Mouse Scroll Indicator dot */
+.group:hover .mouse-dot {
+  transform: translateY(16px) !important;
+  animation: none !important;
+}
+/* Mouse Scroll Indicator Animations */
+.animate-arrow1 {
+  animation: arrow-one-scale 1.8s cubic-bezier(.4,0,.2,1) infinite, pulse 1.8s cubic-bezier(.4,0,.2,1) infinite;
+}
+.animate-arrow2 {
+  animation: arrow-two-scale 1.8s 0.2s cubic-bezier(.4,0,.2,1) infinite, pulse 1.8s 0.2s cubic-bezier(.4,0,.2,1) infinite;
+}
+.animate-arrow3 {
+  animation: arrow-three-scale 1.8s 0.4s cubic-bezier(.4,0,.2,1) infinite, pulse 1.8s 0.4s cubic-bezier(.4,0,.2,1) infinite;
+}
+
+@keyframes arrow-one-scale {
+  0% { transform: translateY(-8px) scale(.7); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translateY(0px) scale(1); opacity: 0; }
+}
+@keyframes arrow-two-scale {
+  0% { transform: translateY(-4px) scale(.8); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translateY(4px) scale(1.05); opacity: 0; }
+}
+@keyframes arrow-three-scale {
+  0% { transform: translateY(0px) scale(.9); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translateY(8px) scale(1.1); opacity: 0; }
+}
+@keyframes pulse {
+  0% { opacity: 0; }
+  40% { opacity: 1; }
+  100% { opacity: 0; }
+}
 
 @tailwind base;
 @tailwind components;
@@ -100,6 +142,11 @@ html {
   display: inline-block;
   will-change: transform, filter;
   transition: transform 115ms cubic-bezier(.2,.9,.2,1), filter 115ms cubic-bezier(.2,.9,.2,1);
+}
+
+.hero-letter:hover {
+  transform: translateY(-4px) scale(1.05);
+  filter: brightness(1.1);
 }
 
 /* proximity-based hover handled in JS; keep no :hover styles here */

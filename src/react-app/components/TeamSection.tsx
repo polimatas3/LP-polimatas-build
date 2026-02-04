@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import ceo1Img from '@/assets/images/team/ceo1.avif';
 import ceo2Img from '@/assets/images/team/ceo2.avif';
 import ceo3Img from '@/assets/images/team/ceo3.avif';
@@ -47,7 +47,7 @@ export default function TeamSection() {
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -60,12 +60,12 @@ export default function TeamSection() {
           <p className="text-gray-500 text-lg max-w-2xl mx-auto font-light">
             Três líderes com visão estratégica, tecnologia e inovação no centro das decisões.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Team Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {teamMembers.map((member, index) => (
-            <motion.article
+            <m.article
               key={member.name}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -74,7 +74,7 @@ export default function TeamSection() {
               className="text-center"
             >
               {/* Photo */}
-              <motion.div 
+              <m.div 
                 className="relative mx-auto mb-6 w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-2 border-white/10 bg-white/5"
                 whileHover={{ scale: 1.05, borderColor: 'rgba(6, 182, 212, 0.5)' }}
                 transition={{ duration: 0.3 }}
@@ -91,7 +91,7 @@ export default function TeamSection() {
                     (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&size=200&background=1a1a1a&color=06b6d4&font-size=0.4`;
                   }}
                 />
-              </motion.div>
+              </m.div>
 
               {/* Name */}
               <h3 className="text-xl md:text-2xl font-medium text-white mb-1">
@@ -107,7 +107,7 @@ export default function TeamSection() {
               <p className="text-gray-400 text-sm leading-relaxed max-w-xs mx-auto">
                 {member.bio}
               </p>
-            </motion.article>
+            </m.article>
           ))}
         </div>
       </div>

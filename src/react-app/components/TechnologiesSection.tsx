@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { m, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { TechIcon } from './TechIcon';
 // importação removida: BackgroundSnippets não utilizado
@@ -45,7 +45,7 @@ export default function TechnologiesSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
-    <motion.section
+    <m.section
       id="technologies"
       ref={containerRef}
       className="relative py-16 bg-black overflow-hidden w-full"
@@ -57,7 +57,7 @@ export default function TechnologiesSection() {
         {/* Removido: overlays antigos de gradiente e dotted pattern */}
 
       <div className="relative z-10 w-full">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -70,9 +70,9 @@ export default function TechnologiesSection() {
           <p className="text-gray-500 text-base font-light max-w-xl mx-auto">
             Tecnologias que transformam conhecimento em sistemas inteligentes
           </p>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -125,8 +125,8 @@ export default function TechnologiesSection() {
           </div>
 
           <div className="w-full h-px bg-neutral-800 [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />
-        </motion.div>
+        </m.div>
       </div>
-    </motion.section>
+    </m.section>
   );
 }

@@ -1,7 +1,9 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Instagram, Youtube, Mail } from 'lucide-react';
 import { Link } from 'react-router';
-import logoImg from '@/assets/images/logo.avif';
+import logo80 from '@/assets/images/logo-80.avif';
+import logo160 from '@/assets/images/logo-160.avif';
+import logo240 from '@/assets/images/logo-240.avif';
 
 export default function Footer() {
   const socialLinks = [
@@ -53,7 +55,7 @@ export default function Footer() {
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
-          <motion.div 
+          <m.div 
             className="col-span-1"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -61,9 +63,13 @@ export default function Footer() {
           >
             <div className="flex items-center gap-3 mb-4">
               <img 
-                src={logoImg} 
+                src={logo80}
+                srcSet={`${logo80} 80w, ${logo160} 160w, ${logo240} 240w`}
+                sizes="80px"
                 alt="Polímatas - Automação e Inteligência Artificial" 
                 className="h-10 w-auto object-contain"
+                width="80"
+                height="42"
                 loading="lazy"
                 decoding="async"
               />
@@ -74,10 +80,10 @@ export default function Footer() {
             <p className="text-gray-500 text-sm font-light leading-relaxed">
               Transformando negócios com automação inteligente e soluções de IA sob medida.
             </p>
-          </motion.div>
+          </m.div>
 
           {/* Navigation */}
-          <motion.div 
+          <m.div 
             className="col-span-1"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -97,10 +103,10 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </m.div>
 
           {/* Legal */}
-          <motion.div 
+          <m.div 
             className="col-span-1"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -129,10 +135,10 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </m.div>
 
           {/* Social */}
-          <motion.div 
+          <m.div 
             className="col-span-1"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -144,7 +150,7 @@ export default function Footer() {
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
-                  <motion.a
+                  <m.a
                     key={social.label}
                     href={social.href}
                     target="_blank"
@@ -161,16 +167,16 @@ export default function Footer() {
                     }}
                     aria-label={social.label}
                   >
-                    <Icon className="w-4 h-4 text-gray-500 group-hover:text-[#38b6fe] transition-colors" />
-                  </motion.a>
+                    <Icon className="w-4 h-4 text-gray-500 group-hover:text-[#38b6fe] transition-colors" aria-hidden="true" />
+                  </m.a>
                 );
               })}
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* Bottom bar */}
-        <motion.div
+        <m.div
           className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -183,10 +189,10 @@ export default function Footer() {
           <p className="text-gray-600 text-xs font-light">
             CNPJ: 60.808.811/0001-45
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Privacy and tracking notice */}
-        <motion.div
+        <m.div
           className="mt-6 text-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -203,7 +209,7 @@ export default function Footer() {
           <p className="text-gray-700 text-xs font-light">
             Utilizamos Google Analytics e outras ferramentas de análise para monitorar e melhorar nossos serviços.
           </p>
-        </motion.div>
+        </m.div>
       </div>
     </footer>
   );

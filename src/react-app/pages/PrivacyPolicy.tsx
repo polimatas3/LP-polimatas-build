@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import Header from '@/react-app/components/Header';
 import Footer from '@/react-app/components/Footer';
 import { ArrowLeft } from 'lucide-react';
@@ -14,10 +14,18 @@ export default function PrivacyPolicy() {
     <div className="min-h-screen bg-black">
       <Header />
       
-      <main className="pt-32 pb-20">
+      {/* Skip to main content link for accessibility */}
+      <a 
+        href="#main" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-6 focus:py-3 focus:bg-cyan-500 focus:text-black focus:font-semibold focus:rounded-lg focus:shadow-lg"
+      >
+        Pular para o conteúdo principal
+      </a>
+
+      <main id="main" tabIndex={-1} className="pt-32 pb-20">
         <div className="container mx-auto px-6 max-w-4xl">
           {/* Back button */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
@@ -29,20 +37,20 @@ export default function PrivacyPolicy() {
               <ArrowLeft className="w-4 h-4" />
               Voltar ao início
             </Link>
-          </motion.div>
+          </m.div>
 
           {/* Title */}
-          <motion.h1
+          <m.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-5xl font-light text-white mb-6"
           >
             Política de Privacidade
-          </motion.h1>
+          </m.h1>
 
           {/* Intro */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -54,10 +62,10 @@ export default function PrivacyPolicy() {
             <p className="text-gray-400 leading-relaxed">
               Ao utilizar este site, você concorda com as práticas descritas nesta Política de Privacidade.
             </p>
-          </motion.div>
+          </m.div>
 
           {/* Content */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -200,7 +208,7 @@ export default function PrivacyPolicy() {
                 Última atualização: 24 de dezembro de 2025
               </p>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </main>
 

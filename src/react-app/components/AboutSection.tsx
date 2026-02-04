@@ -1,9 +1,13 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { m, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { Badge } from './ui/badge';
 import { BorderTrail } from './ui/border-trail';
 import { HoverButton } from './ui/hover-button';
-import davinciImg from '@/assets/images/davinci.avif';
+import { openContactCalendly } from '../lib/contact-calendly';
+import davinci360 from '@/assets/images/davinci-360.avif';
+import davinci480 from '@/assets/images/davinci-480.avif';
+import davinci720 from '@/assets/images/davinci-720.avif';
+import davinci960 from '@/assets/images/davinci-960.avif';
 
 export default function AboutSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -15,7 +19,7 @@ export default function AboutSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
-    <motion.section 
+    <m.section 
       id="about" 
       ref={containerRef}
       className="pt-20 pb-8 lg:pt-40 lg:pb-16 bg-black relative overflow-hidden"
@@ -31,7 +35,7 @@ export default function AboutSection() {
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left Content */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -87,19 +91,17 @@ export default function AboutSection() {
             </div>
 
             <div className="pt-2">
-              <HoverButton onClick={() => {
-                const element = document.getElementById('contact');
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' });
-                }
+              <HoverButton onClick={(e) => {
+                e.preventDefault();
+                openContactCalendly();
               }}>
                 Agende uma chamada agora
               </HoverButton>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Right Image */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -114,16 +116,20 @@ export default function AboutSection() {
                 }}
               />
               <img 
-                src={davinciImg}
+                src={davinci360}
+                srcSet={`${davinci360} 360w, ${davinci480} 480w, ${davinci720} 720w, ${davinci960} 960w`}
+                sizes="(max-width: 480px) 90vw, 364px"
                 alt="Polímata - Leonardo da Vinci representando a união entre arte, ciência e tecnologia com Inteligência Artificial"
                 className="w-full h-auto rounded-2xl aspect-square object-cover"
+                width="720"
+                height="720"
                 loading="lazy"
                 decoding="async"
               />
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
-    </motion.section>
+    </m.section>
   );
 }

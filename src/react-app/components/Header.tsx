@@ -1,13 +1,24 @@
-import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import logoImg from '@/assets/images/logo.avif';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import logo80 from '@/assets/images/logo-80.avif';
+import logo160 from '@/assets/images/logo-160.avif';
+import logo240 from '@/assets/images/logo-240.avif';
+
+// Lazy load framer-motion only when mobile menu is opened
+const MobileMenu = lazy(() => import('./MobileMenu'));
+
+// Inline SVG icons to avoid lucide-react dependency in critical path
+const MenuIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+);
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [animationDone, setAnimationDone] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,10 +53,19 @@ export default function Header() {
       window.location.href = `/#${id}`;
       return;
     }
+    
+    setIsMobileMenuOpen(false);
+    
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
+      const headerOffset = 80;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -59,13 +79,7 @@ export default function Header() {
   ];
 
   return (
-    <motion.header
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 1.5 }}
-      onAnimationComplete={() => setAnimationDone(true)}
-      className="fixed top-0 left-0 right-0 z-50"
-    >
+    <header className="fixed top-0 left-0 right-0 z-50">
       {/* Outer wrapper that narrows when scrolled (adds external margins) */}
         <div
           style={{
@@ -74,30 +88,37 @@ export default function Header() {
             transition: 'margin 1.5s cubic-bezier(.2,.9,.2,1)',
           }}
         >
-        {/* Inner box that receives the border and backdrop when scrolled (only after entrance animation) */}
+        {/* Inner box that receives the border and backdrop when scrolled */}
         <div
           style={{
             borderRadius: isScrolled ? 12 : 0,
-            border: isScrolled && animationDone ? '1px solid rgba(255,255,255,0.08)' : 'none',
-            background: isScrolled && animationDone ? 'rgba(0,0,0,0.45)' : 'transparent',
-            backdropFilter: isScrolled && animationDone ? 'blur(6px)' : 'none',
+            border: isScrolled ? '1px solid rgba(255,255,255,0.08)' : 'none',
+            background: isScrolled ? 'rgba(0,0,0,0.45)' : 'transparent',
+            backdropFilter: isScrolled ? 'blur(6px)' : 'none',
             transition: 'all 1.5s cubic-bezier(.2,.9,.2,1)',
           }}
         >
           <div className="container mx-auto px-6 py-4 flex items-center justify-between">
             {/* Logo on the left */}
             <div className="flex items-center">
-              <motion.div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollToSection('home')} whileHover={{ scale: 1.02 }}>
+              <div 
+                className="flex items-center gap-3 cursor-pointer transition-transform hover:scale-105" 
+                onClick={() => scrollToSection('home')}
+              >
                 <img 
-                  src={logoImg} 
+                  src={logo80}
+                  srcSet={`${logo80} 80w, ${logo160} 160w, ${logo240} 240w`}
+                  sizes="80px"
                   alt="Polímatas - Automação e Inteligência Artificial" 
                   className="h-10 w-auto object-contain"
+                  width="80"
+                  height="42"
                   decoding="async"
                 />
                 <div className="flex flex-col">
                   <span className="text-lg font-light tracking-tight text-white">Polímatas</span>
                 </div>
-              </motion.div>
+              </div>
             </div>
 
             {/* Right-side wrapper: nav pills + Contato + mobile menu (keeps two main children for justify-between) */}
@@ -127,8 +148,14 @@ export default function Header() {
 
               {/* Mobile menu button */}
               <div className="lg:hidden">
-                <button className="text-white" onClick={() => setIsMobileMenuOpen(v => !v)}>
-                  {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                <button 
+                  className="text-white" 
+                  onClick={() => setIsMobileMenuOpen(v => !v)}
+                  aria-label={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+                  aria-expanded={isMobileMenuOpen}
+                  aria-controls="mobile-menu"
+                >
+                  <MenuIcon />
                 </button>
               </div>
             </div>
@@ -136,20 +163,15 @@ export default function Header() {
         </div>
       </div>
 
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.28 }} className="lg:hidden bg-black/95 backdrop-blur-xl border-t border-white/10">
-            <nav className="container mx-auto px-6 py-6 flex flex-col gap-4">
-              {navItems.map((item) => (
-                <button key={item.id} onClick={() => { scrollToSection(item.id); setIsMobileMenuOpen(false); }} className="text-left text-sm text-gray-300 py-2">
-                  {item.label}
-                </button>
-              ))}
-              <button onClick={() => { scrollToSection('contact'); setIsMobileMenuOpen(false); }} className="mt-2 px-4 py-2 bg-white text-black rounded-full text-sm w-max">Contato</button>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
+      {isMobileMenuOpen && (
+        <Suspense fallback={null}>
+          <MobileMenu 
+            navItems={navItems}
+            scrollToSection={scrollToSection}
+            onClose={() => setIsMobileMenuOpen(false)}
+          />
+        </Suspense>
+      )}
+    </header>
   );
 }
