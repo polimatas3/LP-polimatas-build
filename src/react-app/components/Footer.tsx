@@ -184,7 +184,7 @@ export default function Footer() {
           transition={{ delay: 0.5 }}
         >
           <p className="text-gray-500 text-xs font-light">
-            © 2025 Polímatas AI. Todos os direitos reservados.
+            © 2026 Polímatas AI. Todos os direitos reservados.
           </p>
           <p className="text-gray-600 text-xs font-light">
             CNPJ: 60.808.811/0001-45
